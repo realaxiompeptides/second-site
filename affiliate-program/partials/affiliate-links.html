@@ -1,0 +1,62 @@
+<section class="affiliate-card">
+  <div class="affiliate-links-header">
+    <h2 class="affiliate-section-title">Generate Tracking Links</h2>
+    <p class="affiliate-muted">
+      Create a referral link for any page on the site. The referral will track across the whole site after the customer lands.
+    </p>
+  </div>
+
+  <form id="affiliateLinkGeneratorForm" class="affiliate-links-form">
+    <input id="affiliateTargetPath" type="hidden" value="" />
+
+    <div class="affiliate-grid-2">
+      <div class="affiliate-field">
+        <label for="affiliateLinkType">Link Type</label>
+        <select id="affiliateLinkType" class="affiliate-input">
+          <option value="home">Homepage</option>
+          <option value="catalog">Catalog Page</option>
+          <option value="product">Product Page</option>
+          <option value="custom">Custom Path</option>
+        </select>
+      </div>
+
+      <div class="affiliate-field" id="affiliateProductField" hidden>
+        <label for="affiliateProductSlug">Product</label>
+        <select id="affiliateProductSlug" class="affiliate-input">
+          <option value="">Loading products...</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="affiliate-field" id="affiliateCustomPathField" hidden>
+      <label for="affiliateCustomPathInput">Custom Path</label>
+      <input
+        id="affiliateCustomPathInput"
+        class="affiliate-input"
+        type="text"
+        placeholder="/catalog.html or /product-page/product.html?slug=tb500"
+      />
+    </div>
+
+    <div class="affiliate-field affiliate-links-button-wrap">
+      <button type="button" class="affiliate-btn affiliate-btn-primary" id="generateAffiliateLinkBtn">
+        Generate Link
+      </button>
+    </div>
+
+    <div class="affiliate-field">
+      <label for="affiliateGeneratedLink">Generated Tracking Link</label>
+      <div class="affiliate-link-output-row">
+        <input id="affiliateGeneratedLink" class="affiliate-input" type="text" readonly />
+        <button
+          type="button"
+          class="affiliate-btn affiliate-btn-secondary"
+          data-affiliate-copy=""
+          id="affiliateCopyGeneratedLinkBtn"
+        >
+          Copy Link
+        </button>
+      </div>
+    </div>
+  </form>
+</section>

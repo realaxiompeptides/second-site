@@ -1,0 +1,118 @@
+#cartTriggerMount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#cartTriggerMount .cart-btn {
+  position: relative;
+  width: 54px;
+  height: 54px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid #dbe3ee;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #0f172a;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+  text-decoration: none;
+  padding: 0;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+#cartTriggerMount .cart-btn svg {
+  width: 21px;
+  height: 21px;
+  fill: #0f172a;
+  display: block;
+}
+
+#cartTriggerMount .cart-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: #4fa3d9;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  line-height: 1;
+}
+
+@media (max-width: 640px) {
+  #cartTriggerMount .cart-btn {
+    width: 52px;
+    height: 52px;
+  }
+
+  #cartTriggerMount .cart-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  #cartTriggerMount .cart-count {
+    min-width: 21px;
+    height: 21px;
+    font-size: 11px;
+    top: -5px;
+    right: -5px;
+  }
+}
+
+#cartTriggerMount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#cartTriggerMount .cart-btn {
+  width: 58px !important;
+  height: 58px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: #f8fafc !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  box-shadow: inset 0 0 0 1px #e5e7eb !important;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+#cartTriggerMount .cart-btn svg {
+  width: 24px !important;
+  height: 24px !important;
+  display: block !important;
+  fill: #111827 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+#cartTriggerMount .cart-count {
+  position: absolute !important;
+  top: -4px !important;
+  right: -4px !important;
+  min-width: 24px !important;
+  height: 24px !important;
+  padding: 0 6px !important;
+  background: #2f84bf !important;
+  color: #ffffff !important;
+  border-radius: 999px !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+}

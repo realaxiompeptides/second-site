@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+  />
+  <title>Admin Login | Axiom Dashboard</title>
+  <meta
+    name="description"
+    content="Admin login for the Axiom Dashboard."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="dashboard.css" />
+  <link rel="stylesheet" href="auth/login.css" />
+</head>
+<body class="axiom-dashboard-page">
+
+  <main class="dashboard-login-page">
+    <section class="dashboard-login-card">
+
+      <div class="dashboard-login-brand">
+        <img
+          src="../images/axiom-logo.PNG"
+          alt="Axiom Peptides logo"
+          class="dashboard-login-logo"
+        />
+        <p class="dashboard-login-kicker">Admin Access</p>
+        <h1>Axiom Dashboard</h1>
+        <p class="dashboard-login-subtext">
+          Sign in to manage orders, sessions, analytics, and fulfillment.
+        </p>
+      </div>
+
+      <form id="adminLoginForm" class="dashboard-login-form" novalidate>
+        <div class="dashboard-login-field">
+          <label for="adminLoginEmail">Admin Email</label>
+          <input
+            type="email"
+            id="adminLoginEmail"
+            class="dashboard-login-input"
+            placeholder="Enter your admin email"
+            autocomplete="email"
+            required
+          />
+        </div>
+
+        <div class="dashboard-login-field">
+          <label for="adminLoginPassword">Password</label>
+          <input
+            type="password"
+            id="adminLoginPassword"
+            class="dashboard-login-input"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            required
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="dashboard-login-btn"
+          id="adminLoginSubmit"
+        >
+          Log In
+        </button>
+
+        <p id="adminLoginMessage" class="dashboard-login-message"></p>
+      </form>
+
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="dashboard-config.js"></script>
+  <script src="shared/tracking-config.js"></script>
+  <script src="shared/helpers.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="auth/login.js"></script>
+</body>
+</html>

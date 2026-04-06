@@ -1,0 +1,776 @@
+<section
+  class="admin-panel-card affiliates-admin-card affiliates-admin-shell"
+  id="affiliateManagementMount"
+  data-affiliate-admin-root
+>
+  <div class="affiliates-admin-header affiliates-admin-header-shell">
+    <div>
+      <p class="affiliates-admin-kicker">Affiliates</p>
+      <h2 class="affiliates-admin-title">Affiliate Management</h2>
+      <p class="affiliates-admin-subtext">
+        Approve, reject, suspend, review clicks, conversions, claims, payouts, and notes.
+      </p>
+    </div>
+
+    <div class="affiliates-admin-header-actions">
+      <button
+        type="button"
+        class="affiliates-admin-btn affiliates-admin-btn-secondary"
+        id="refreshAffiliatesBtn"
+        data-affiliate-refresh
+      >
+        Refresh
+      </button>
+    </div>
+  </div>
+
+  <div class="affiliates-admin-stats-grid affiliates-admin-stats-shell">
+    <div class="affiliates-admin-stat-card">
+      <span class="affiliates-admin-stat-label">Total Affiliates</span>
+      <strong
+        class="affiliates-admin-stat-value"
+        id="affiliateStatTotal"
+        data-summary="total-affiliates"
+        data-affiliate-total
+      >0</strong>
+    </div>
+
+    <div class="affiliates-admin-stat-card">
+      <span class="affiliates-admin-stat-label">Approved</span>
+      <strong
+        class="affiliates-admin-stat-value"
+        id="affiliateStatApproved"
+        data-summary="approved-affiliates"
+        data-affiliate-approved
+      >0</strong>
+    </div>
+
+    <div class="affiliates-admin-stat-card">
+      <span class="affiliates-admin-stat-label">Pending Payout Requests</span>
+      <strong
+        class="affiliates-admin-stat-value"
+        id="affiliateStatPending"
+        data-summary="pending-claims"
+      >0</strong>
+    </div>
+
+    <div class="affiliates-admin-stat-card">
+      <span class="affiliates-admin-stat-label">Claimable</span>
+      <strong
+        class="affiliates-admin-stat-value"
+        id="affiliateStatClaimable"
+        data-summary="claimable-amount"
+        data-affiliate-claimable
+      >$0.00</strong>
+    </div>
+  </div>
+
+  <div class="affiliates-admin-toolbar affiliates-admin-toolbar-shell">
+    <div class="affiliates-admin-search-wrap">
+      <input
+        type="text"
+        id="affiliateSearchInput"
+        class="affiliates-admin-search-input"
+        placeholder="Search by name, email, referral code, or Discord"
+        autocomplete="off"
+        data-affiliate-search
+      />
+    </div>
+
+    <div class="affiliates-admin-filter-wrap">
+      <select
+        id="affiliateStatusFilter"
+        class="affiliates-admin-filter-select"
+        data-affiliate-status-filter
+      >
+        <option value="all">All Statuses</option>
+        <option value="pending">Pending</option>
+        <option value="approved">Approved</option>
+        <option value="rejected">Rejected</option>
+        <option value="suspended">Suspended</option>
+      </select>
+    </div>
+  </div>
+
+  <div
+    class="affiliates-admin-status-tabs affiliates-admin-status-tabs-shell"
+    id="affiliateAdminStatusTabs"
+  >
+    <button
+      type="button"
+      class="affiliates-admin-status-tab is-active"
+      data-affiliate-status-tab="all"
+      aria-pressed="true"
+    >
+      All
+    </button>
+    <button
+      type="button"
+      class="affiliates-admin-status-tab"
+      data-affiliate-status-tab="approved"
+      aria-pressed="false"
+    >
+      Approved
+    </button>
+    <button
+      type="button"
+      class="affiliates-admin-status-tab"
+      data-affiliate-status-tab="pending"
+      aria-pressed="false"
+    >
+      Pending
+    </button>
+    <button
+      type="button"
+      class="affiliates-admin-status-tab"
+      data-affiliate-status-tab="suspended"
+      aria-pressed="false"
+    >
+      Suspended
+    </button>
+    <button
+      type="button"
+      class="affiliates-admin-status-tab"
+      data-affiliate-status-tab="rejected"
+      aria-pressed="false"
+    >
+      Rejected
+    </button>
+  </div>
+
+  <div
+    class="affiliates-admin-error"
+    id="affiliateErrorState"
+    data-affiliate-error
+    hidden
+  ></div>
+
+  <div class="affiliates-admin-payout-requests-card affiliates-admin-payout-requests-shell">
+    <div class="affiliates-admin-section-header">
+      <div>
+        <h3>Affiliate Payout Requests</h3>
+        <p>Review payout claims submitted by affiliates.</p>
+      </div>
+    </div>
+
+    <div class="affiliates-admin-table-wrap affiliates-admin-table-wrap-claims">
+      <table class="affiliates-admin-table affiliates-admin-claims-table" data-affiliate-payout-requests>
+        <thead>
+          <tr>
+            <th>Affiliate</th>
+            <th>Email</th>
+            <th>Requested</th>
+            <th>Status</th>
+            <th>Requested At</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody
+          id="affiliatePayoutRequestsTableBody"
+          data-affiliate-payout-requests-body
+        >
+          <tr>
+            <td colspan="6">Loading payout requests...</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div
+        class="affiliates-admin-empty"
+        id="affiliatePayoutRequestsEmpty"
+        hidden
+      >
+        No payout requests found.
+      </div>
+    </div>
+  </div>
+
+  <div class="affiliates-admin-table-wrap affiliates-admin-main-table-shell">
+    <table class="affiliates-admin-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Discord</th>
+          <th>Status</th>
+          <th>Code</th>
+          <th>Clicks</th>
+          <th>Conversions</th>
+          <th>Earned</th>
+          <th>Claimable</th>
+          <th>Pending Claims</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody
+        id="affiliatesAdminTableBody"
+        data-affiliate-table-body
+      >
+        <tr data-affiliate-loading-row>
+          <td colspan="11">Loading affiliates...</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div
+      class="affiliates-admin-empty"
+      id="affiliateEmptyState"
+      data-affiliate-empty
+      hidden
+    >
+      No affiliates found.
+    </div>
+  </div>
+</section>
+
+<div
+  class="affiliates-admin-modal"
+  id="affiliateDetailModal"
+  hidden
+  aria-hidden="true"
+>
+  <div
+    class="affiliates-admin-modal-backdrop"
+    data-affiliate-modal-close
+  ></div>
+
+  <div
+    class="affiliates-admin-modal-dialog affiliates-admin-detail-modal-shell"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="affiliateDetailName"
+  >
+    <div class="affiliates-admin-modal-header">
+      <div>
+        <p class="affiliates-admin-kicker">Affiliate Details</p>
+        <h3 class="affiliates-admin-modal-title" id="affiliateDetailName">Affiliate</h3>
+      </div>
+
+      <button
+        type="button"
+        class="affiliates-admin-icon-btn"
+        id="closeAffiliateDetailModal"
+        data-affiliate-modal-close
+        aria-label="Close"
+      >
+        &times;
+      </button>
+    </div>
+
+    <div class="affiliates-admin-modal-body">
+      <div class="affiliates-admin-modal-tabs affiliates-admin-modal-tabs-shell" id="affiliateDetailSectionTabs">
+        <button
+          type="button"
+          class="affiliates-admin-modal-tab is-active"
+          data-affiliate-detail-tab="overview"
+          aria-pressed="true"
+        >
+          Overview
+        </button>
+        <button
+          type="button"
+          class="affiliates-admin-modal-tab"
+          data-affiliate-detail-tab="settings"
+          aria-pressed="false"
+        >
+          Settings
+        </button>
+        <button
+          type="button"
+          class="affiliates-admin-modal-tab"
+          data-affiliate-detail-tab="notes"
+          aria-pressed="false"
+        >
+          Notes
+        </button>
+        <button
+          type="button"
+          class="affiliates-admin-modal-tab"
+          data-affiliate-detail-tab="conversions"
+          aria-pressed="false"
+        >
+          Conversions
+        </button>
+        <button
+          type="button"
+          class="affiliates-admin-modal-tab"
+          data-affiliate-detail-tab="claims"
+          aria-pressed="false"
+        >
+          Claims
+        </button>
+        <button
+          type="button"
+          class="affiliates-admin-modal-tab"
+          data-affiliate-detail-tab="payouts"
+          aria-pressed="false"
+        >
+          Payouts
+        </button>
+        <button
+          type="button"
+          class="affiliates-admin-modal-tab"
+          data-affiliate-detail-tab="record-payout"
+          aria-pressed="false"
+        >
+          Record Payout
+        </button>
+      </div>
+
+      <div
+        class="affiliate-detail-section affiliate-detail-section-overview"
+        id="affiliateDetailSectionOverview"
+        data-affiliate-detail-section="overview"
+      >
+        <div class="affiliates-admin-detail-grid">
+          <div class="affiliates-admin-detail-card">
+            <h4>Profile</h4>
+            <div class="affiliates-admin-detail-list">
+              <div class="affiliates-admin-detail-row">
+                <span>Name</span>
+                <strong id="affiliateDetailNameInline">—</strong>
+              </div>
+              <div class="affiliates-admin-detail-row">
+                <span>Email</span>
+                <strong id="affiliateDetailEmail">—</strong>
+              </div>
+              <div class="affiliates-admin-detail-row">
+                <span>Discord</span>
+                <strong id="affiliateDetailDiscord">—</strong>
+              </div>
+              <div class="affiliates-admin-detail-row">
+                <span>Status</span>
+                <strong id="affiliateDetailStatus">—</strong>
+              </div>
+              <div class="affiliates-admin-detail-row">
+                <span>Referral Code</span>
+                <strong id="affiliateDetailCode">—</strong>
+              </div>
+              <div class="affiliates-admin-detail-row">
+                <span>Commission</span>
+                <strong id="affiliateDetailCommission">—</strong>
+              </div>
+              <div class="affiliates-admin-detail-row">
+                <span>Discount</span>
+                <strong id="affiliateDetailDiscount">—</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="affiliates-admin-detail-card">
+            <h4>Totals</h4>
+            <div class="affiliates-admin-detail-list">
+              <div class="affiliates-admin-detail-row">
+                <span>Clicks</span>
+                <strong id="affiliateDetailClicks">0</strong>
+              </div>
+              <div class="affiliates-admin-detail-row">
+                <span>Conversions</span>
+                <strong id="affiliateDetailConversions">0</strong>
+              </div>
+              <div class="affiliates-admin-detail-row">
+                <span>Available to Claim</span>
+                <strong id="affiliateDetailClaimable">$0.00</strong>
+              </div>
+              <div class="affiliates-admin-detail-row">
+                <span>Reserved in Claims</span>
+                <strong id="affiliateDetailReserved">$0.00</strong>
+              </div>
+              <div class="affiliates-admin-detail-row">
+                <span>Total Earned</span>
+                <strong id="affiliateDetailEarned">$0.00</strong>
+              </div>
+              <div class="affiliates-admin-detail-row">
+                <span>Paid Out</span>
+                <strong id="affiliateDetailPaid">$0.00</strong>
+              </div>
+              <div class="affiliates-admin-detail-row">
+                <span>Created</span>
+                <strong id="affiliateDetailCreatedAt">—</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="affiliate-detail-section affiliate-detail-section-settings"
+        id="affiliateDetailSectionSettings"
+        data-affiliate-detail-section="settings"
+        hidden
+      >
+        <div class="affiliates-admin-detail-card">
+          <div class="affiliates-admin-section-header">
+            <h4>Commission & Discount Settings</h4>
+            <p>Edit commission and discount settings for this affiliate only.</p>
+          </div>
+
+          <form id="affiliateCompSettingsForm" class="affiliates-admin-form-grid">
+            <input type="hidden" id="affiliateCompSettingsAffiliateId" />
+
+            <div class="affiliates-admin-field">
+              <label for="affiliateCommissionType">Commission Type</label>
+              <select id="affiliateCommissionType">
+                <option value="percent">Percent</option>
+                <option value="fixed">Fixed</option>
+              </select>
+            </div>
+
+            <div class="affiliates-admin-field">
+              <label for="affiliateCommissionValue">Commission Value</label>
+              <input
+                type="number"
+                id="affiliateCommissionValue"
+                min="0"
+                step="0.01"
+                placeholder="10"
+              />
+            </div>
+
+            <div class="affiliates-admin-field">
+              <label for="affiliateDiscountType">Discount Type</label>
+              <select id="affiliateDiscountType">
+                <option value="percent">Percent</option>
+                <option value="fixed">Fixed</option>
+              </select>
+            </div>
+
+            <div class="affiliates-admin-field">
+              <label for="affiliateDiscountValue">Discount Value</label>
+              <input
+                type="number"
+                id="affiliateDiscountValue"
+                min="0"
+                step="0.01"
+                placeholder="10"
+              />
+            </div>
+
+            <div class="affiliates-admin-field affiliates-admin-field-full">
+              <div
+                id="affiliateCompSettingsMessage"
+                class="affiliates-admin-inline-message"
+                hidden
+              ></div>
+            </div>
+
+            <div class="affiliates-admin-form-actions">
+              <button
+                type="submit"
+                class="affiliates-admin-btn affiliates-admin-btn-primary"
+                id="saveAffiliateCompSettingsBtn"
+              >
+                Save Settings
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div
+        class="affiliate-detail-section affiliate-detail-section-notes"
+        id="affiliateDetailSectionNotes"
+        data-affiliate-detail-section="notes"
+        hidden
+      >
+        <div class="affiliates-admin-detail-card">
+          <div class="affiliates-admin-section-header">
+            <h4>Affiliate Notes</h4>
+            <p>Internal admin-only notes for this affiliate.</p>
+          </div>
+
+          <form id="affiliateNotesForm" class="affiliates-admin-form-grid">
+            <input type="hidden" id="affiliateNotesAffiliateId" />
+
+            <div class="affiliates-admin-field affiliates-admin-field-full">
+              <label for="affiliateNotesInput">Notes</label>
+              <textarea
+                id="affiliateNotesInput"
+                rows="6"
+                placeholder="Add internal notes about this affiliate..."
+              ></textarea>
+            </div>
+
+            <div class="affiliates-admin-field affiliates-admin-field-full">
+              <div
+                id="affiliateNotesMessage"
+                class="affiliates-admin-inline-message"
+                hidden
+              ></div>
+            </div>
+
+            <div class="affiliates-admin-form-actions">
+              <button
+                type="submit"
+                class="affiliates-admin-btn affiliates-admin-btn-primary"
+                id="saveAffiliateNotesBtn"
+              >
+                Save Notes
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div
+        class="affiliate-detail-section affiliate-detail-section-conversions"
+        id="affiliateDetailSectionConversions"
+        data-affiliate-detail-section="conversions"
+        hidden
+      >
+        <div class="affiliates-admin-detail-card">
+          <div class="affiliates-admin-section-header">
+            <h4>Recent Conversions</h4>
+          </div>
+          <div id="affiliateDetailConversionsList" class="affiliates-admin-stack-list">
+            <div class="affiliates-admin-empty">No conversions yet.</div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="affiliate-detail-section affiliate-detail-section-claims"
+        id="affiliateDetailSectionClaims"
+        data-affiliate-detail-section="claims"
+        hidden
+      >
+        <div class="affiliates-admin-detail-card">
+          <div class="affiliates-admin-section-header">
+            <h4>Claim Requests</h4>
+          </div>
+          <div id="affiliateDetailClaimsList" class="affiliates-admin-stack-list">
+            <div class="affiliates-admin-empty">No claim requests yet.</div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="affiliate-detail-section affiliate-detail-section-payouts"
+        id="affiliateDetailSectionPayouts"
+        data-affiliate-detail-section="payouts"
+        hidden
+      >
+        <div class="affiliates-admin-detail-card">
+          <div class="affiliates-admin-section-header">
+            <h4>Recent Payouts</h4>
+          </div>
+          <div id="affiliateDetailPayoutsList" class="affiliates-admin-stack-list">
+            <div class="affiliates-admin-empty">No payouts yet.</div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="affiliate-detail-section affiliate-detail-section-record-payout"
+        id="affiliateDetailSectionRecordPayout"
+        data-affiliate-detail-section="record-payout"
+        hidden
+      >
+        <div class="affiliates-admin-detail-card">
+          <div class="affiliates-admin-section-header">
+            <h4>Record Payout</h4>
+          </div>
+
+          <form id="affiliateRecordPayoutForm" class="affiliates-admin-form-grid">
+            <input type="hidden" id="affiliatePayoutAffiliateId" />
+
+            <div class="affiliates-admin-field">
+              <label for="affiliatePayoutAmount">Amount</label>
+              <input
+                type="number"
+                id="affiliatePayoutAmount"
+                min="0"
+                step="0.01"
+                placeholder="0.00"
+              />
+            </div>
+
+            <div class="affiliates-admin-field">
+              <label for="affiliatePayoutMethod">Payout Method</label>
+              <input
+                type="text"
+                id="affiliatePayoutMethod"
+                placeholder="PayPal / Cash App / Zelle / Crypto"
+              />
+            </div>
+
+            <div class="affiliates-admin-field">
+              <label for="affiliatePayoutReference">Reference</label>
+              <input
+                type="text"
+                id="affiliatePayoutReference"
+                placeholder="Transaction ID / note"
+              />
+            </div>
+
+            <div class="affiliates-admin-field affiliates-admin-field-full">
+              <label for="affiliatePayoutNotes">Notes</label>
+              <textarea
+                id="affiliatePayoutNotes"
+                rows="3"
+                placeholder="Optional notes"
+              ></textarea>
+            </div>
+
+            <div class="affiliates-admin-form-actions">
+              <button
+                type="submit"
+                class="affiliates-admin-btn affiliates-admin-btn-primary"
+              >
+                Record Paid Payout
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="affiliates-admin-modal"
+  id="affiliatePayoutReviewModal"
+  hidden
+  aria-hidden="true"
+>
+  <div
+    class="affiliates-admin-modal-backdrop"
+    data-payout-review-close
+  ></div>
+
+  <div
+    class="affiliates-admin-modal-dialog affiliate-admin-payout-review-dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="affiliatePayoutReviewTitle"
+  >
+    <div class="affiliates-admin-modal-header">
+      <div>
+        <p class="affiliates-admin-kicker">Payout Review</p>
+        <h3 class="affiliates-admin-modal-title" id="affiliatePayoutReviewTitle">Confirm Affiliate Payout</h3>
+      </div>
+
+      <button
+        type="button"
+        class="affiliates-admin-icon-btn"
+        data-payout-review-close
+        aria-label="Close payout review"
+      >
+        &times;
+      </button>
+    </div>
+
+    <div class="affiliates-admin-modal-body">
+      <div class="affiliates-admin-detail-card">
+        <h4>Payout Request Details</h4>
+
+        <div class="affiliates-admin-detail-list">
+          <div class="affiliates-admin-detail-row">
+            <span>Affiliate</span>
+            <strong id="affiliatePayoutReviewName">—</strong>
+          </div>
+
+          <div class="affiliates-admin-detail-row">
+            <span>Email</span>
+            <strong id="affiliatePayoutReviewEmail">—</strong>
+          </div>
+
+          <div class="affiliates-admin-detail-row">
+            <span>Discord</span>
+            <strong id="affiliatePayoutReviewDiscord">—</strong>
+          </div>
+
+          <div class="affiliates-admin-detail-row">
+            <span>Amount</span>
+            <strong id="affiliatePayoutReviewAmount">$0.00</strong>
+          </div>
+
+          <div class="affiliates-admin-detail-row">
+            <span>Payout Method</span>
+            <strong id="affiliatePayoutReviewMethod">—</strong>
+          </div>
+
+          <div class="affiliates-admin-detail-row">
+            <span>Network</span>
+            <strong id="affiliatePayoutReviewNetwork">—</strong>
+          </div>
+
+          <div class="affiliates-admin-detail-row">
+            <span>Contact</span>
+            <strong id="affiliatePayoutReviewContact">—</strong>
+          </div>
+
+          <div class="affiliates-admin-detail-row affiliates-admin-detail-row-full">
+            <span>Wallet / Address</span>
+            <div class="affiliates-admin-inline-copy">
+              <input
+                type="text"
+                id="affiliatePayoutReviewAddress"
+                class="affiliates-admin-copy-input"
+                readonly
+                value=""
+              />
+              <button
+                type="button"
+                class="affiliates-admin-btn affiliates-admin-btn-secondary"
+                id="affiliatePayoutCopyAddressBtn"
+              >
+                Copy
+              </button>
+            </div>
+          </div>
+
+          <div class="affiliates-admin-detail-row affiliates-admin-detail-row-full">
+            <span>Claim Note</span>
+            <strong id="affiliatePayoutReviewClaimNote">—</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="affiliates-admin-detail-card">
+        <h4>Confirm Payment</h4>
+
+        <div class="affiliates-admin-form-grid">
+          <div class="affiliates-admin-field affiliates-admin-field-full">
+            <label for="affiliatePayoutReviewTxId">Transaction ID / Hash</label>
+            <input
+              type="text"
+              id="affiliatePayoutReviewTxId"
+              placeholder="Paste transaction hash / tx id here"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="affiliates-admin-field affiliates-admin-field-full">
+            <label for="affiliatePayoutReviewNotes">Admin Notes</label>
+            <textarea
+              id="affiliatePayoutReviewNotes"
+              rows="4"
+              placeholder="Optional internal notes about this payout"
+            ></textarea>
+          </div>
+
+          <div class="affiliates-admin-form-actions">
+            <button
+              type="button"
+              class="affiliates-admin-btn affiliates-admin-btn-secondary"
+              data-payout-review-close
+            >
+              Cancel
+            </button>
+
+            <button
+              type="button"
+              class="affiliates-admin-btn affiliates-admin-btn-primary"
+              id="affiliatePayoutConfirmPaidBtn"
+            >
+              Confirm Mark Paid
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

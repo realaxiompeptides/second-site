@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+  />
+  <title>Your Cart | Axiom Peptides</title>
+
+  <meta
+    name="description"
+    content="Review your cart, update quantities, and continue to secure checkout."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/home.css" />
+  <link rel="stylesheet" href="../css/menu.css" />
+  <link rel="stylesheet" href="../cart/cart.css" />
+  <link rel="stylesheet" href="../cart/cart-drawer-icon.css?v=3" />
+  <link rel="stylesheet" href="../footer/footer.css" />
+  <link rel="stylesheet" href="cart.css?v=16" />
+</head>
+<body class="axiom-cart-page">
+
+  <div class="top-announcement-bar">
+    <div class="top-announcement-track">
+      <span class="announcement-item">🇺🇸 USA Fulfilled Orders</span>
+      <span class="announcement-sep">|</span>
+      <span class="announcement-item">🧪 Third-Party Lab Tested</span>
+      <span class="announcement-sep">|</span>
+      <span class="announcement-item">⭐ Trusted by 4,200+ Researchers</span>
+
+      <span class="announcement-sep">|</span>
+      <span class="announcement-item">🇺🇸 USA Fulfilled Orders</span>
+      <span class="announcement-sep">|</span>
+      <span class="announcement-item">🧪 Third-Party Lab Tested</span>
+      <span class="announcement-sep">|</span>
+      <span class="announcement-item">⭐ Trusted by 4,200+ Researchers</span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="header-inner container">
+      <button
+        class="icon-btn hamburger-btn"
+        id="menuToggle"
+        aria-label="Open menu"
+        aria-controls="mobileMenu"
+        aria-expanded="false"
+        type="button"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <a href="../index.html" class="site-logo" aria-label="Axiom Peptides home">
+        <img src="../images/axiom-logo.PNG" alt="Axiom Peptides logo" />
+      </a>
+
+      <div id="cartTriggerMount"></div>
+    </div>
+  </header>
+
+  <aside class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu-inner">
+      <div class="mobile-menu-header">
+        <a href="../index.html" class="mobile-menu-logo" aria-label="Axiom Peptides home">
+          <img src="../images/axiom-menu-logo.PNG" alt="Axiom Peptides logo" />
+        </a>
+
+        <button class="drawer-close" id="menuClose" aria-label="Close menu" type="button">
+          &times;
+        </button>
+      </div>
+
+      <nav class="mobile-nav">
+        <a href="../index.html" class="mobile-nav-link">
+          <span>Home</span>
+          <span class="mobile-nav-arrow">›</span>
+        </a>
+
+        <a href="../catalog.html" class="mobile-nav-link">
+          <span>Products</span>
+          <span class="mobile-nav-arrow">›</span>
+        </a>
+
+        <a href="../track-order/track-order.html" class="mobile-nav-link">
+          <span>Track Your Order</span>
+          <span class="mobile-nav-arrow">›</span>
+        </a>
+
+        <a href="../affiliate-program/affiliate-program.html" class="mobile-nav-link">
+          <span>Affiliate Program</span>
+          <span class="mobile-nav-arrow">›</span>
+        </a>
+
+        <a href="../contact-us/contact.html" class="mobile-nav-link">
+          <span>Contact Us</span>
+          <span class="mobile-nav-arrow">›</span>
+        </a>
+      </nav>
+
+      <div class="mobile-menu-divider"></div>
+
+      <div class="mobile-menu-secondary">
+        <a href="../account/account.html" class="mobile-nav-link secondary-link">
+          <span>Account</span>
+          <span class="mobile-nav-arrow">›</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+    <div class="cart-drawer-inner">
+      <div class="cart-drawer-header">
+        <h2>Your Cart</h2>
+        <button class="drawer-close" id="cartClose" aria-label="Close cart" type="button">
+          &times;
+        </button>
+      </div>
+
+      <div class="cart-body">
+        <div class="cart-empty-state" id="cartEmptyState">
+          <p class="cart-empty-text">Your cart is currently empty.</p>
+          <a href="../catalog.html" class="cart-pill-btn cart-outline-btn">Browse Products</a>
+        </div>
+
+        <div class="cart-items-list" id="cartItemsList" hidden></div>
+      </div>
+
+      <div class="cart-footer">
+        <div class="cart-subtotal-row">
+          <span>Subtotal</span>
+          <strong id="cartSubtotal">$0.00</strong>
+        </div>
+
+        <div class="cart-action-stack">
+          <a href="../cart-page/cart.html" class="cart-pill-btn cart-muted-btn">View Cart</a>
+          <a href="../checkout/checkout.html" class="cart-pill-btn cart-outline-btn">Checkout</a>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="site-overlay" id="siteOverlay"></div>
+
+  <main class="cart-page-shell">
+    <section class="cart-page-hero">
+      <p class="cart-page-kicker">YOUR CART</p>
+      <h1>Review Your Order</h1>
+      <p>Update quantities, remove items, apply discounts, and continue to checkout when you are ready.</p>
+    </section>
+
+    <section class="cart-page-layout">
+      <div class="cart-page-main">
+        <div class="cart-card">
+          <div class="cart-card-header">
+            <h2>Order Summary</h2>
+          </div>
+
+          <div id="cartPageItemsWrap" class="cart-page-items-wrap">
+            <div class="cart-page-loading">Loading cart...</div>
+          </div>
+        </div>
+
+        <div class="cart-card cart-card-summary">
+          <div class="cart-card-header">
+            <h2>Cart Total</h2>
+          </div>
+
+          <div class="cart-summary-list cart-summary-list-page">
+            <div class="cart-summary-row">
+              <span>Items</span>
+              <strong id="cartSummaryItemsCount">0</strong>
+            </div>
+
+            <div class="cart-summary-row">
+              <span>Subtotal</span>
+              <strong id="cartSummarySubtotal">$0.00</strong>
+            </div>
+
+            <div class="cart-summary-row cart-summary-discount" id="cartPageDiscountRow" hidden>
+              <span>Discount</span>
+              <strong id="cartPageDiscountAmount">-$0.00</strong>
+            </div>
+
+            <div class="cart-summary-row">
+              <span>Estimated Shipping</span>
+              <strong id="cartSummaryShipping">Calculated at checkout</strong>
+            </div>
+
+            <div class="cart-summary-row">
+              <span>Estimated Tax</span>
+              <strong id="cartSummaryTax">Calculated at checkout</strong>
+            </div>
+          </div>
+
+          <div class="cart-summary-total">
+            <span>Total</span>
+            <strong id="cartSummaryTotal">$0.00</strong>
+          </div>
+
+          <div class="cart-page-coupon-box">
+            <label for="cartPageCouponCode" class="cart-page-coupon-label">Coupon Code</label>
+            <div class="cart-page-coupon-row">
+              <input
+                type="text"
+                id="cartPageCouponCode"
+                class="cart-page-coupon-input"
+                placeholder="Enter coupon code"
+                autocomplete="off"
+              />
+              <button type="button" id="cartPageApplyCouponBtn" class="cart-page-coupon-btn">
+                Apply Coupon
+              </button>
+            </div>
+            <p id="cartPageCouponMessage" class="cart-page-coupon-message"></p>
+          </div>
+
+          <div class="cart-summary-actions">
+  <a href="../catalog.html" class="cart-page-btn cart-page-btn-secondary">
+    Continue Shopping
+  </a>
+
+  <button
+    type="button"
+    class="cart-page-btn cart-page-btn-primary"
+    id="cartCheckoutBtn"
+  >
+    Proceed to Checkout
+  </button>
+</div>
+
+          <div class="cart-page-payment-icons" aria-label="Accepted payment methods">
+            <div class="cart-page-payment-grid icons-only-grid">
+              <div class="cart-page-payment-icon" title="Visa" aria-label="Visa">
+                <i class="fa-brands fa-cc-visa" aria-hidden="true"></i>
+              </div>
+
+              <div class="cart-page-payment-icon" title="Mastercard" aria-label="Mastercard">
+                <i class="fa-brands fa-cc-mastercard" aria-hidden="true"></i>
+              </div>
+
+              <div class="cart-page-payment-icon" title="American Express" aria-label="American Express">
+                <i class="fa-brands fa-cc-amex" aria-hidden="true"></i>
+              </div>
+
+              <div class="cart-page-payment-icon" title="Discover" aria-label="Discover">
+                <i class="fa-brands fa-cc-discover" aria-hidden="true"></i>
+              </div>
+
+              <div class="cart-page-payment-icon" title="Bitcoin" aria-label="Bitcoin">
+                <i class="fa-brands fa-bitcoin" aria-hidden="true"></i>
+              </div>
+
+              <div class="cart-page-payment-icon" title="Ethereum" aria-label="Ethereum">
+                <i class="fa-brands fa-ethereum" aria-hidden="true"></i>
+              </div>
+
+              <div class="cart-page-payment-icon" title="Solana" aria-label="Solana">
+                <img
+                  src="../images/payment-icons/solana.jpg"
+                  alt="Solana"
+                  class="cart-page-payment-icon-img"
+                  onerror="this.onerror=null;this.style.display='none';"
+                />
+              </div>
+
+              <div class="cart-page-payment-icon" title="Apple Pay" aria-label="Apple Pay">
+                <i class="fa-brands fa-apple-pay" aria-hidden="true"></i>
+              </div>
+
+              <div class="cart-page-payment-icon cart-page-payment-icon-google" title="Google Pay" aria-label="Google Pay">
+                <img
+                  src="../images/payment-icons/google-pay.jpg"
+                  alt="Google Pay"
+                  class="cart-page-payment-icon-img cart-page-payment-icon-img-google"
+                  onerror="this.onerror=null;this.style.display='none';"
+                />
+              </div>
+
+              <div class="cart-page-payment-icon" title="ACH" aria-label="ACH">
+                <span class="payment-wordmark">ACH</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="cart-summary-note">
+            Taxes and shipping are calculated during checkout.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="../js/menu.js" defer></script>
+  <script src="../cart/cart-drawer-icon-loader.js" defer></script>
+  <script src="../cart/cart.js" defer></script>
+  <script src="../js/app.js" defer></script>
+  <script src="../footer/footer-loader.js" defer></script>
+  <script src="cart.js?v=16" defer></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../admin-dashboard/dashboard-config.js" defer></script>
+  <script src="../admin-dashboard/shared/tracking-config.js" defer></script>
+  <script src="../admin-dashboard/shared/helpers.js" defer></script>
+  <script src="../admin-dashboard/supabase-client.js" defer></script>
+  <script src="../admin-dashboard/visitor-session.js" defer></script>
+  <script src="../admin-dashboard/cart-session/cart-session.js" defer></script>
+  <script src="../affiliate-program/affiliate-tracking.js" defer></script>
+</body>
+</html>
