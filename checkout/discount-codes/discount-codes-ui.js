@@ -5,18 +5,7 @@
     discountType: "",
     discountValue: 0,
     description: "",
-    isApplied: false,
-
-    isAffiliateCode: false,
-    affiliateId: null,
-    affiliateCode: "",
-    affiliateReferralCode: "",
-    affiliateDiscountAmount: 0,
-    affiliateCommissionAmount: 0,
-    affiliateCommissionType: "",
-    affiliateCommissionValue: 0,
-    affiliateEmail: "",
-    affiliateFullName: ""
+    isApplied: false
   };
 
   function toNumber(value, fallback = 0) {
@@ -94,17 +83,6 @@
     state.discountValue = 0;
     state.description = "";
     state.isApplied = false;
-
-    state.isAffiliateCode = false;
-    state.affiliateId = null;
-    state.affiliateCode = "";
-    state.affiliateReferralCode = "";
-    state.affiliateDiscountAmount = 0;
-    state.affiliateCommissionAmount = 0;
-    state.affiliateCommissionType = "";
-    state.affiliateCommissionValue = 0;
-    state.affiliateEmail = "";
-    state.affiliateFullName = "";
   }
 
   function clearAppliedDiscount() {
@@ -156,18 +134,7 @@
       discountType: state.discountType,
       discountValue: state.discountValue,
       description: state.description,
-      isApplied: state.isApplied,
-
-      isAffiliateCode: state.isAffiliateCode,
-      affiliateId: state.affiliateId,
-      affiliateCode: state.affiliateCode,
-      affiliateReferralCode: state.affiliateReferralCode,
-      affiliateDiscountAmount: state.affiliateDiscountAmount,
-      affiliateCommissionAmount: state.affiliateCommissionAmount,
-      affiliateCommissionType: state.affiliateCommissionType,
-      affiliateCommissionValue: state.affiliateCommissionValue,
-      affiliateEmail: state.affiliateEmail,
-      affiliateFullName: state.affiliateFullName
+      isApplied: state.isApplied
     };
   }
 
@@ -212,24 +179,6 @@
       state.discountValue = toNumber(result.discount_value, 0);
       state.description = toText(result.description, "");
       state.isApplied = true;
-
-      state.isAffiliateCode = result.is_affiliate_code === true;
-      state.affiliateId = result.affiliate_id || null;
-      state.affiliateCode = normalizeCode(result.affiliate_code || result.code || code);
-      state.affiliateReferralCode = normalizeCode(
-        result.affiliate_referral_code || result.affiliate_code || result.code || code
-      );
-      state.affiliateDiscountAmount = toNumber(
-        result.affiliate_discount_amount !== undefined && result.affiliate_discount_amount !== null
-          ? result.affiliate_discount_amount
-          : result.discount_amount,
-        0
-      );
-      state.affiliateCommissionAmount = toNumber(result.affiliate_commission_amount, 0);
-      state.affiliateCommissionType = toText(result.affiliate_commission_type, "");
-      state.affiliateCommissionValue = toNumber(result.affiliate_commission_value, 0);
-      state.affiliateEmail = toText(result.affiliate_email, "");
-      state.affiliateFullName = toText(result.affiliate_full_name, "");
 
       applyDiscountToUi();
       setFeedback(result.message || "Discount code applied.", "success");
