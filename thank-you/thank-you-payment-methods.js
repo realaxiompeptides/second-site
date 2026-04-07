@@ -110,7 +110,7 @@ function thankYouGetOrderFollowupText(paymentKey, orderNumber, order) {
   }
 
   if (paymentKey === "cashapp") {
-    return `Send payment to the Cash App username below and include order #<strong>${safeOrder}</strong> in the note so we can match it to your order.`;
+    return `You can either send payment to the Cash App username below or use Cash App Bitcoin and send to the BTC address below. Include order #<strong>${safeOrder}</strong> so we can match your payment correctly.`;
   }
 
   if (paymentKey === "banktransfer") {
@@ -163,16 +163,34 @@ const THANK_YOU_PAYMENT_METHODS = {
       <div class="thank-you-payment-steps-card">
         <div class="thank-you-payment-steps-title">How to Pay with Cash App</div>
         <ol class="thank-you-payment-steps-list">
-          <li>Open Cash App and search for our username <strong>$axiompeptides</strong>.</li>
-          <li>Send the exact total for your order to that Cash App tag.</li>
-          <li>In the payment note, include <strong>only your order number</strong> so we can match the payment correctly.</li>
-          <li>You can also use the crypto section below if you would rather pay with Bitcoin, Ethereum, USDT, USDC, or Solana using the listed wallet addresses.</li>
-          <li>After sending payment, keep your confirmation screenshot for your records until your order is confirmed.</li>
+          <li>Option 1: send payment directly to our Cash App username <strong>$axiompeptides</strong>.</li>
+          <li>Option 2: open Cash App Bitcoin and send BTC to our Bitcoin address shown below.</li>
+          <li>If paying by Cash App username, send the exact order total and include <strong>only your order number</strong> in the note.</li>
+          <li>If paying with Cash App Bitcoin, send BTC to the address below, then keep your transaction confirmation.</li>
+          <li>After sending either way, message us on WhatsApp or Telegram with your order number so we can confirm your payment faster.</li>
         </ol>
       </div>
     `,
     instructions:
-      "Send your payment through Cash App to the username below and include only your order number in the note."
+      "You can pay using our Cash App username or send Bitcoin through Cash App to the BTC address below.",
+    extraCopyFields: [
+      {
+        label: "Bitcoin (BTC) Address",
+        value: "bc1q7hruzv3vy3hhdkceaa5hmlgjcqnky78wwjs4t8"
+      }
+    ],
+    actionButtons: [
+      {
+        label: "WhatsApp",
+        href: "https://wa.me/15307019349",
+        external: true
+      },
+      {
+        label: "Telegram",
+        href: "https://t.me/axiompeptides",
+        external: true
+      }
+    ]
   },
 
   banktransfer: {
@@ -509,6 +527,12 @@ function thankYouBuildMethodDetails(methodConfig, orderNumber, order) {
     );
   }
 
+  if (Array.isArray(methodConfig.extraCopyFields) && methodConfig.extraCopyFields.length) {
+    detailsHtml += methodConfig.extraCopyFields
+      .map((item) => thankYouCreateCopyButton(item.label, item.value))
+      .join("");
+  }
+
   const bankDetails = thankYouGetBankTransferDetails(methodConfig, order);
 
   if (Array.isArray(bankDetails) && bankDetails.length) {
@@ -556,6 +580,16 @@ function thankYouBuildMethodDetails(methodConfig, orderNumber, order) {
       `After sending the ${
         thankYouIsInternationalOrder(order) ? "international wire" : "domestic transfer"
       }, message your order number ${
+        orderNumber ? `#${thankYouEscapeHtml(orderNumber)}` : ""
+      } and payment confirmation.`
+    );
+  }
+
+  if (Array.isArray(methodConfig.actionButtons) && methodConfig.actionButtons.length) {
+    detailsHtml += thankYouCreateActionButtons(
+      methodConfig.actionButtons,
+      orderNumber,
+      `After sending payment, message your order number ${
         orderNumber ? `#${thankYouEscapeHtml(orderNumber)}` : ""
       } and payment confirmation.`
     );
