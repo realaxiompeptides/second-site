@@ -106,7 +106,7 @@ function thankYouGetOrderFollowupText(paymentKey, orderNumber, order) {
   }
 
   if (paymentKey === "crypto") {
-    return `After sending crypto, message your transaction ID and order #<strong>${safeOrder}</strong> using WhatsApp, Telegram, or Discord below so we can confirm your payment.`;
+    return `After sending crypto, message your transaction ID and order #<strong>${safeOrder}</strong> using WhatsApp or Telegram below so we can confirm your payment.`;
   }
 
   if (paymentKey === "banktransfer") {
@@ -296,11 +296,11 @@ const THANK_YOU_PAYMENT_METHODS = {
     label: "Crypto",
     logo: "../images/payment-icons/crypto-group.jpg",
     instructions:
-      "Send the exact amount using the correct crypto and network. After sending, message your transaction ID and order number using WhatsApp, Telegram, or Discord below so we can confirm your payment.",
+      "Send the exact amount using the correct crypto and network. After sending, message your transaction ID and order number using WhatsApp or Telegram below so we can confirm your payment.",
     wallets: [
       {
         label: "Bitcoin (BTC)",
-        value: "bc1qfde75y9d8ad72sah7acf9vlc8csxeaewyk5rah"
+        value: "bc1q7hruzv3vy3hhdkceaa5hmlgjcqnky78wwjs4t8"
       },
       {
         label: "Ethereum (ETH)",
@@ -335,12 +335,7 @@ const THANK_YOU_PAYMENT_METHODS = {
       },
       {
         label: "Telegram",
-        href: "https://t.me/+2hr9SQknvslkZDg5",
-        external: true
-      },
-      {
-        label: "Discord",
-        href: "https://discord.gg/Wz9C39ERe",
+        href: "https://t.me/axiompeptides",
         external: true
       }
     ]
@@ -516,7 +511,7 @@ function thankYouBuildMethodDetails(methodConfig, orderNumber, order) {
       orderNumber,
       `After sending crypto, message your transaction ID and order number ${
         orderNumber ? `#${thankYouEscapeHtml(orderNumber)}` : ""
-      } using WhatsApp, Telegram, or Discord.`
+      } using WhatsApp or Telegram.`
     );
   }
 
