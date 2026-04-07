@@ -110,7 +110,7 @@ function thankYouGetOrderFollowupText(paymentKey, orderNumber, order) {
   }
 
   if (paymentKey === "cashapp") {
-    return `Use Cash App only if you do not want to send crypto. Crypto is easier. Include order #<strong>${safeOrder}</strong> in the note, or message us after payment if needed.`;
+    return `Send payment to the Cash App username below and include order #<strong>${safeOrder}</strong> in the note so we can match it to your order.`;
   }
 
   if (paymentKey === "banktransfer") {
@@ -164,15 +164,15 @@ const THANK_YOU_PAYMENT_METHODS = {
         <div class="thank-you-payment-steps-title">How to Pay with Cash App</div>
         <ol class="thank-you-payment-steps-list">
           <li>Open Cash App and search for our username <strong>$axiompeptides</strong>.</li>
-          <li>You can pay with Cash App if you want, but <strong>crypto is easier</strong> and usually preferred.</li>
-          <li>If paying through Cash App, send the exact order total and include <strong>only your order number</strong> in the note.</li>
-          <li>If you would rather pay with crypto, go back and choose the crypto option instead, then send using the correct wallet and network.</li>
-          <li>After sending payment, keep your confirmation screenshot or transaction ID for your records.</li>
+          <li>Send the exact total for your order to that Cash App tag.</li>
+          <li>In the payment note, include <strong>only your order number</strong> so we can match the payment correctly.</li>
+          <li>You can also use the crypto section below if you would rather pay with Bitcoin, Ethereum, USDT, USDC, or Solana using the listed wallet addresses.</li>
+          <li>After sending payment, keep your confirmation screenshot for your records until your order is confirmed.</li>
         </ol>
       </div>
     `,
     instructions:
-      "You can pay with Cash App using our username below, but crypto is easier if you prefer that option."
+      "Send your payment through Cash App to the username below and include only your order number in the note."
   },
 
   banktransfer: {
