@@ -109,6 +109,10 @@ function thankYouGetOrderFollowupText(paymentKey, orderNumber, order) {
     return `After sending crypto, message your transaction ID and order #<strong>${safeOrder}</strong> using WhatsApp or Telegram below so we can confirm your payment.`;
   }
 
+  if (paymentKey === "cashapp") {
+    return `Use Cash App only if you do not want to send crypto. Crypto is easier. Include order #<strong>${safeOrder}</strong> in the note, or message us after payment if needed.`;
+  }
+
   if (paymentKey === "banktransfer") {
     if (thankYouIsInternationalOrder(order)) {
       return `Use order #<strong>${safeOrder}</strong> as the payment reference when possible, then message us after sending the international wire so we can match it to your order.`;
@@ -155,8 +159,20 @@ const THANK_YOU_PAYMENT_METHODS = {
     handle: "$axiompeptides",
     linkLabel: "",
     link: "",
+    instructionHtml: `
+      <div class="thank-you-payment-steps-card">
+        <div class="thank-you-payment-steps-title">How to Pay with Cash App</div>
+        <ol class="thank-you-payment-steps-list">
+          <li>Open Cash App and search for our username <strong>$axiompeptides</strong>.</li>
+          <li>You can pay with Cash App if you want, but <strong>crypto is easier</strong> and usually preferred.</li>
+          <li>If paying through Cash App, send the exact order total and include <strong>only your order number</strong> in the note.</li>
+          <li>If you would rather pay with crypto, go back and choose the crypto option instead, then send using the correct wallet and network.</li>
+          <li>After sending payment, keep your confirmation screenshot or transaction ID for your records.</li>
+        </ol>
+      </div>
+    `,
     instructions:
-      "Send payment through Cash App and include only your order number in the note."
+      "You can pay with Cash App using our username below, but crypto is easier if you prefer that option."
   },
 
   banktransfer: {
@@ -449,6 +465,24 @@ function thankYouGetBankTransferInstructions(methodConfig, order) {
     : methodConfig.domesticInstructions || "";
 }
 
+function thankYouRenderMethodInstructions(methodConfig, order) {
+  if (!methodConfig) return "";
+
+  if (methodConfig.key === "banktransfer") {
+    return `<p class="thank-you-payment-method-instructions">${thankYouEscapeHtml(
+      thankYouGetBankTransferInstructions(methodConfig, order) || ""
+    )}</p>`;
+  }
+
+  if (methodConfig.instructionHtml) {
+    return methodConfig.instructionHtml;
+  }
+
+  return `<p class="thank-you-payment-method-instructions">${thankYouEscapeHtml(
+    methodConfig.instructions || ""
+  )}</p>`;
+}
+
 function thankYouBuildMethodDetails(methodConfig, orderNumber, order) {
   if (!methodConfig) return "";
 
@@ -565,9 +599,6 @@ function thankYouBuildPrimaryMethodCard(methodConfig, orderNumber, order) {
   if (!methodConfig) return "";
 
   const safeLabel = thankYouEscapeHtml(methodConfig.label);
-  const safeInstructions = thankYouEscapeHtml(
-    thankYouGetBankTransferInstructions(methodConfig, order) || methodConfig.instructions || ""
-  );
 
   return `
     <div class="thank-you-payment-method-card is-primary">
@@ -577,7 +608,7 @@ function thankYouBuildPrimaryMethodCard(methodConfig, orderNumber, order) {
 
           <div class="thank-you-payment-method-heading-copy">
             <h3 class="thank-you-payment-method-name">${safeLabel}</h3>
-            <p class="thank-you-payment-method-instructions">${safeInstructions}</p>
+            ${thankYouRenderMethodInstructions(methodConfig, order)}
             ${
               orderNumber
                 ? `<p class="thank-you-payment-order-note">${thankYouGetOrderFollowupText(methodConfig.key, orderNumber, order)}</p>`
@@ -598,9 +629,6 @@ function thankYouBuildAccordionItem(methodConfig, orderNumber, index, order) {
   if (!methodConfig) return "";
 
   const safeLabel = thankYouEscapeHtml(methodConfig.label);
-  const safeInstructions = thankYouEscapeHtml(
-    thankYouGetBankTransferInstructions(methodConfig, order) || methodConfig.instructions || ""
-  );
   const panelId = `thankYouPaymentAccordionPanel${index}`;
 
   return `
@@ -631,7 +659,7 @@ function thankYouBuildAccordionItem(methodConfig, orderNumber, index, order) {
         hidden
       >
         <div class="thank-you-payment-accordion-panel-inner">
-          <p class="thank-you-payment-method-instructions">${safeInstructions}</p>
+          ${thankYouRenderMethodInstructions(methodConfig, order)}
           ${
             orderNumber
               ? `<p class="thank-you-payment-order-note">${thankYouGetOrderFollowupText(methodConfig.key, orderNumber, order)}</p>`
